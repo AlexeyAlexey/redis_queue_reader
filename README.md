@@ -34,11 +34,21 @@ defmodule MyFunctionParsers do
   def function1(res) do
     IO.puts res
     IO.puts "1"
+    res
   end
   def function2(res) do
     IO.puts res
     IO.puts "2"
+    function_to_db(res)
     :timer.sleep(10000)
+    res
+  end
+  def function_to_db(:undefined) do
+    IO.puts " undefined undefined undefined"
+  end
+  def function_to_db(str) do
+    IO.puts str
+    IO.puts "str"
   end
 end
 ```
