@@ -25,6 +25,7 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
     ```
 
 
+[Exapmle (read from queue (redis) and than write to a DB)](https://github.com/AlexeyAlexey/redis_queue_reader_parser)
 
 0) iex --name redis_queue_reader@127.0.0.1 --cookie 123 -S mix
 
@@ -34,11 +35,21 @@ defmodule MyFunctionParsers do
   def function1(res) do
     IO.puts res
     IO.puts "1"
+    res
   end
   def function2(res) do
     IO.puts res
     IO.puts "2"
+    function_to_db(res)
     :timer.sleep(10000)
+    res
+  end
+  def function_to_db(:undefined) do
+    IO.puts " undefined undefined undefined"
+  end
+  def function_to_db(str) do
+    IO.puts str
+    IO.puts "str"
   end
 end
 ```
