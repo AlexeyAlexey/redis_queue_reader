@@ -14,7 +14,7 @@ defmodule RedisQueueReader.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger],
+    [applications: [:logger, :exredis, :poolboy, :gproc],
      mod: {RedisQueueReader, []}]
   end
 
@@ -28,6 +28,8 @@ defmodule RedisQueueReader.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    []
+    [{ :exredis, ">= 0.2.4" },
+     { :poolboy, "~> 1.5"   },
+     { :gproc,   "~> 0.5.0" }]
   end
 end

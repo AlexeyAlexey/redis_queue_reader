@@ -28,3 +28,15 @@ use Mix.Config
 # here (which is why it is important to import them last).
 #
 #     import_config "#{Mix.env}.exs"
+
+
+#config :redis_queue_reader, RedisQueueReader.Redis,
+  #url: "redis://127.0.0.1:6379",
+  #reconnect: :no_reconnect,
+  #max_queue: :infinity
+  #url: "redis://user:password@host:1234/10",
+  #reconnect: :no_reconnect,
+  #max_queue: :infinity
+
+#config :redis_queue_reader, RedisQueueReader.Supervisor,
+  #redis_pool: %{size: 5, max_overflow: 0}
