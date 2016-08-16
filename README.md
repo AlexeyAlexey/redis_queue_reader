@@ -26,7 +26,8 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 
 0) iex --name redis_queue_reader@127.0.0.1 --cookie 123 -S mix
 
-1) 
+
+```elixir
 defmodule MyFunctionParsers do
   def function1(res) do
     IO.puts res
@@ -38,9 +39,10 @@ defmodule MyFunctionParsers do
     :timer.sleep(10000)
   end
 end
+```
 
-RedisQueueReader.Manager.init_parser("queue_1", [ &MyFunctionParsers.function1/1, &MyFunctionParsers.function2/1] )
-   
+1) RedisQueueReader.Manager.init_parser("queue_1", [ &MyFunctionParsers.function1/1, &MyFunctionParsers.function2/1] )
+
 
 2) RedisQueueReader.Manager.start_new_parser("queue_1")
 
