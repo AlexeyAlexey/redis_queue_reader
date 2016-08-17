@@ -10,13 +10,13 @@ defmodule RedisQueueReader.Manager  do
   end
 
   
-  def init_parser(name, reader_functions) do
+  def init_reader(name, reader_functions) do
     result = Supervisor.start_child(:sub_supervisor_readers, [name, reader_functions])
 
     result
   end
 
-  def start_new_parser(name_of_queue) do
+  def start_new_reader(name_of_queue) do
     sup_pid = :gproc.where({ :n, :l, {:sub_supervisor_reader, name_of_queue} })
     if sup_pid == :undefined do
       {:error, "Can not find queue named #{name_of_queue}"}
@@ -29,7 +29,7 @@ defmodule RedisQueueReader.Manager  do
     end
   end
 
-  def destroy_all_parsers_without_check_child(name_of_queue) do
+  def destroy_all_readers_without_check_child(name_of_queue) do
     sup_pid = :gproc.where({ :n, :l, {:sub_supervisor_reader, name_of_queue} })
     if sup_pid == :undefined do
       IO.puts "Can not find queue named #{name_of_queue}"
@@ -43,15 +43,15 @@ defmodule RedisQueueReader.Manager  do
     Supervisor.which_children(pid) 
   end
 
-  def list_of_parsers_of(name_of_queue) do
+  def list_of_readers_of(name_of_queue) do
     pid = :gproc.where({ :n, :l, {:sub_supervisor_reader, name_of_queue} })
     Supervisor.which_children(pid)                                  
-    #[{:undefined, #PID<0.289.0>, :worker, [RedisQueueReader.Parser]},
-    # {:undefined, #PID<0.274.0>, :worker, [RedisQueueReader.Parser]}]
+    #[{:undefined, #PID<0.289.0>, :worker, [RedisQueueReader.Reader]},
+    # {:undefined, #PID<0.274.0>, :worker, [RedisQueueReader.Reader]}]
   end
 
-  #stop one parser
-  def stop_parser_of(name_of_queue) do
+  #stop one reader
+  def stop_reader_of(name_of_queue) do
     pid = :gproc.where({ :n, :l, {:sub_supervisor_reader, name_of_queue} })
     Supervisor.which_children(pid)
     |> List.first
@@ -66,22 +66,22 @@ defmodule RedisQueueReader.Manager  do
     #Process.send(pid, {:kjhkjjh})
   end
 
-  def list_of_init_parsers() do
-    list_of_init_parsers({{:n, :l, {:sub_supervisor_reader, '_'}}, :n}, []) 
+  def list_of_init_readers() do
+    list_of_init_readers({{:n, :l, {:sub_supervisor_reader, '_'}}, :n}, []) 
   end
 
-  defp list_of_init_parsers({{:n, :l, {:sub_supervisor_reader, '_'}}, :n}, _res) do
+  defp list_of_init_readers({{:n, :l, {:sub_supervisor_reader, '_'}}, :n}, _res) do
     found = :gproc.next({:l, :n}, {{:n, :l, {:sub_supervisor_reader, '_'}}, :n})
-    list_of_init_parsers(found, [])
+    list_of_init_readers(found, [])
   end
-  defp list_of_init_parsers({{:n, :l, {:sub_supervisor_reader, name}}, :n}, res ) do
+  defp list_of_init_readers({{:n, :l, {:sub_supervisor_reader, name}}, :n}, res ) do
     found = :gproc.next({:l, :n}, {{:n, :l, {:sub_supervisor_reader, name}}, :n})
-    list_of_init_parsers(found, [name | res])
+    list_of_init_readers(found, [name | res])
   end
-  defp list_of_init_parsers(:"$end_of_table", res) do
+  defp list_of_init_readers(:"$end_of_table", res) do
     res
   end
-  defp list_of_init_parsers(_, res) do
+  defp list_of_init_readers(_, res) do
     res
   end
   #####
