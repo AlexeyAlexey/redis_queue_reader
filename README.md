@@ -66,7 +66,13 @@ config :redis_queue_reader, RedisQueueReader.Supervisor,
 
 5) RedisQueueReader.Manager.list_of_init_readers => ["queue_3", "queue_2", "queue_1"]
 
-
+6) RedisQueueReader.Manager.get_info_about_child("queue_1")# =>
+   [{:undefined, #PID<0.211.0>, :worker, [RedisQueueReader.Reader]},
+    {:undefined, #PID<0.214.0>, :worker, [RedisQueueReader.Reader]}]
+    
+7) RedisQueueReader.Manager.list_of_readers_of("queue_1") #=>
+   [{:undefined, #PID<0.211.0>, :worker, [RedisQueueReader.Reader]},
+    {:undefined, #PID<0.214.0>, :worker, [RedisQueueReader.Reader]}]
 
 ###Example
 
@@ -158,4 +164,18 @@ If you use this function, you have to create a process that will supervise reade
 
 ```elixir
 RedisQueueReader.Manager.list_of_init_readers #=> ["queue_3", "queue_2", "queue_1"]
+```
+
+**The following function returns the list of readers from queue**
+```elixir
+RedisQueueReader.Manager.get_info_about_child("queue_1")# =>
+[{:undefined, #PID<0.211.0>, :worker, [RedisQueueReader.Reader]},
+ {:undefined, #PID<0.214.0>, :worker, [RedisQueueReader.Reader]}]
+```
+
+**The following function returns the same information as the &RedisQueueReader.Manager.get_info_about_child/1**
+```elixir
+RedisQueueReader.Manager.list_of_readers_of("queue_1") #=>
+[{:undefined, #PID<0.211.0>, :worker, [RedisQueueReader.Reader]},
+ {:undefined, #PID<0.214.0>, :worker, [RedisQueueReader.Reader]}]
 ```
