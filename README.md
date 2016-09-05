@@ -4,7 +4,7 @@ Developing
 
 The first function from the list does not receive parameter and must return true or false. The second function from the list takes a result of reading from the redis queue (:undefined or string that have been read from the redis queue). Every next function from the list gets the result of the calculation of the previous one.   
 
-**If the first function return false the next functions from list not be executed**
+**While the first function return false the next functions from list not be executed**
 
 **TODO: Add description**
 
