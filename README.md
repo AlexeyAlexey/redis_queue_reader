@@ -56,7 +56,7 @@ config :redis_queue_reader, RedisQueueReader.Supervisor,
 
 ###Interface
 
-1) RedisQueueReader.Manager.init_reader("queue_1", [ &MyFunctionParsers.first_function/1, &MyFunctionParsers.second_function/1] )
+1) RedisQueueReader.Manager.init_reader("queue_1", [ &MyFunctionParsers.first_function/0, &MyFunctionParsers.second_function/1, &MyFunctionParsers.third_function/1] )
 
 2) RedisQueueReader.Manager.start_new_reader("queue_1")
 
