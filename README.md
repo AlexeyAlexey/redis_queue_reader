@@ -102,8 +102,6 @@ end
 ```
 
 
-**The following function creates a process that will supervise readers from the queue**
-
 ```elixir
 Agent.update(:queque_continue, fn state -> Map.put(state, :queque_continue, false) end)
 
@@ -118,9 +116,9 @@ RedisQueueReader.Manager.init_reader("queue_1", [ &MyFunctionParsers.first_funct
 The function receives two parameters. The first parameter is the name of the redis queue.
 The second parameter is a list of functions. 
 
-The first function in the list does not receive parameter (the arity of functions is zero) another functions in the list receive one parameter (the arity of functions is one).
+The first function in the list does not receive parameter (the arity of function is zero) another functions in the list receive one parameter (the arity of functions is one).
 
-The first function must return true or false
+The first function must return **true** or **false**
 The parameter of the second function (&MyFunctionParsers.second_function/1) in the list can receive the following values **:undefined** or **string** that were read from the redis queue.  
 
 Every next function from the list gets the result of the calculation of the previous one. For example the third function (&MyFunctionParsers.third_function/1) in the list gets the result of the calculation of the second function
