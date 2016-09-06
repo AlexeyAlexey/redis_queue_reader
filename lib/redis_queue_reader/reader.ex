@@ -40,14 +40,18 @@ defmodule RedisQueueReader.Reader do
   
   defp read_from_queue(queue_named, next, reader_functions) when next == true do
 
-    redis_pid = :poolboy.checkout(:redis_pool)
+    [read_from_queue? | reader_functions_for_executing] = reader_functions
 
-    res = GenServer.call(redis_pid, { :read_from_queue, queue_named })
+    if read_from_queue?.() do 
+      redis_pid = :poolboy.checkout(:redis_pool)
 
-    :poolboy.checkin(:redis_pool, redis_pid)
+      res = GenServer.call(redis_pid, { :read_from_queue, queue_named })
 
-    execute_functions( res,  reader_functions)    
+      :poolboy.checkin(:redis_pool, redis_pid)
+
     
+      execute_functions( res,  reader_functions_for_executing)    
+    end
 
     next = check_message
 
