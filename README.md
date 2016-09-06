@@ -2,7 +2,7 @@ Developing
 
 # RedisQueueReader
 
-The first function from the list does not receive parameter and must return true or false. The second function from the list takes a result of reading from the redis queue (:undefined or string that have been read from the redis queue). Every next function from the list gets the result of the calculation of the previous one.   
+The first function from the list does not receive parameter and must return **true** or **false**. The second function from the list takes a result of reading from the redis queue (:undefined, :no_connection or string that have been read from the redis queue). Every next function from the list gets the result of the calculation of the previous one.   
 
 **While the first function return false the next functions from list not be executed**
 
@@ -91,12 +91,18 @@ defmodule MyFunctionParsers do
     #res is a variable that can be equal to :undefined or the information read from the queue 
     res
   end
+
+  def third_function(:no_connection) do
+    #The redis DB has not been connected
+    IO.puts "The redis DB has not been connected"
+  end
   def third_function(res) do
     #res  is a variable that can be equal to the result of the calculation of the second function (second_function/1)
     function_write_to_db(res)
     :timer.sleep(1000)
     res
   end
+
   def function_write_to_db(:undefined) do
     IO.puts "undefined"
   end
