@@ -32,7 +32,8 @@ defmodule RedisQueueReader.Manager  do
   def destroy_all_readers_without_check_child(name_of_queue) do
     sup_pid = :gproc.where({ :n, :l, {:sub_supervisor_reader, name_of_queue} })
     if sup_pid == :undefined do
-      IO.puts "Can not find queue named #{name_of_queue}"
+      #IO.puts "Can not find queue named #{name_of_queue}"
+      {:error, "Can not find queue named #{name_of_queue}"}
     else
       Supervisor.terminate_child(:sub_supervisor_readers, sup_pid)
     end
