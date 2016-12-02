@@ -7,7 +7,7 @@ defmodule RedisQueueReader.SubSupervisor do
     result
   end
 
-  def init(params) do
+  def init(_params) do
     child_processes = [ worker(RedisQueueReader.SubSupervisorReader, []) ]
 
   	supervise child_processes, strategy: :simple_one_for_one

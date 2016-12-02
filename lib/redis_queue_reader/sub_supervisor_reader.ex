@@ -10,14 +10,14 @@ defmodule RedisQueueReader.SubSupervisorReader do
     result
   end
 
-  def start_new_parser(name_of_queue) do
-    sup_pid = :gproc.where({ :n, :l, {:sub_supervisor_reader, name_of_queue} })
-    if sup_pid == :undefined do
-      IO.puts "Can not find queue named #{name_of_queue}"
-    else
-      Supervisor.start_child(sup_pid, [name_of_queue])
-    end
-  end
+  #def start_new_parser(name_of_queue) do
+  #  sup_pid = :gproc.where({ :n, :l, {:sub_supervisor_reader, name_of_queue} })
+  #  if sup_pid == :undefined do
+  #    IO.puts "Can not find queue named #{name_of_queue}"
+  #  else
+  #    Supervisor.start_child(sup_pid, [name_of_queue])
+  #  end
+  #end
 
   #def handle_call(:start_new_parser, _from, state) do
   #  {:state, {:via, :gproc, {:n, :l, {:sub_supervisor_reader, "queue_1"}
